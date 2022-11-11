@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://clwrivli50oc5"]
+
+[ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_kt82o"]
+
+[sub_resource type="GDScript" id="GDScript_nag2s"]
+script/source = "extends PlayableCharacter
+
+
+
+"
+
+[node name="character_fox" instance=ExtResource("1_kt82o")]
+script = SubResource("GDScript_nag2s")
+is_active = true

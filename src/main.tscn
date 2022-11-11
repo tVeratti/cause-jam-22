@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnbwjjg2ju7tn"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_tgy31"]
+[ext_resource type="PackedScene" uid="uid://di4c645y63mhg" path="res://character/character_spirit.tscn" id="2_hfbas"]
+[ext_resource type="PackedScene" uid="uid://clwrivli50oc5" path="res://character/character_fox.tscn" id="3_6ngcu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ov06v"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_rlf1s"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_tgy31")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(12.821, 0, 0, 0, 0.423, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ov06v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_rlf1s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.868311, 0.49602, 0, -0.49602, 0.868311, 0, 6.80872, 6.88285)
+
+[node name="character_spirit" parent="." instance=ExtResource("2_hfbas")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29919, 1.40776, 0)
+
+[node name="character_fox" parent="." instance=ExtResource("3_6ngcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09219, 1.36178, 0)
+is_active = true

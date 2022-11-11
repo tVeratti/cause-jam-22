@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://kcsxyl3evmcs"
+path="res://.godot/imported/fox_mesh.obj-0c6090a80d2221d9d229d22081bcbe53.mesh"
+
+[deps]
+
+files=["res://.godot/imported/fox_mesh.obj-0c6090a80d2221d9d229d22081bcbe53.mesh"]
+
+source_file="res://character/assets/fox_mesh.obj"
+dest_files=["res://.godot/imported/fox_mesh.obj-0c6090a80d2221d9d229d22081bcbe53.mesh", "res://.godot/imported/fox_mesh.obj-0c6090a80d2221d9d229d22081bcbe53.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

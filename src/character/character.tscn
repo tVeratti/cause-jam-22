@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy3ahtqwwk6on"]
+
+[ext_resource type="Script" path="res://character/character.gd" id="1_ybldr"]
+[ext_resource type="Script" path="res://character/player_body.gd" id="2_1xtnh"]
+[ext_resource type="ArrayMesh" uid="uid://kcsxyl3evmcs" path="res://character/assets/fox_mesh.obj" id="3_3r4km"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ints5"]
+
+[node name="character" type="Node3D"]
+script = ExtResource("1_ybldr")
+
+[node name="player_body" type="CharacterBody3D" parent="."]
+script = ExtResource("2_1xtnh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player_body"]
+shape = SubResource("CapsuleShape3D_ints5")
+
+[node name="anchor" type="Node3D" parent="player_body"]
+
+[node name="gizmo" type="Node3D" parent="player_body/anchor"]
+
+[node name="Camera3D" type="Camera3D" parent="player_body/anchor/gizmo"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, -5)
+current = true
+
+[node name="look_at" type="Node3D" parent="player_body"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player_body"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.069667, 0)
+mesh = ExtResource("3_3r4km")
+
+[node name="swap_timer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
