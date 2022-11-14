@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://b26a10wk3k2nc"]
+
+[sub_resource type="GDScript" id="GDScript_juk8e"]
+script/source = "extends Node3D
+
+
+class_name Block
+
+
+var coords:Array = []
+var color:Color = BlockColors.RED:
+	set(value):
+		color = value
+		material.albedo_color = value
+
+
+@onready var mesh:MeshInstance3D = $StaticBody3D/MeshInstance3D
+@onready var material:StandardMaterial3D = mesh.get_active_material(0)
+
+
+func swap_color(character) -> void:
+	var temp_color:Color = character.color
+	character.color = color
+	self.color = temp_color
+
+
+func break_self() -> void:
+	queue_free()
+
+
+func _on_bounce_area_body_entered(body):
+	var character = body.get_parent()
+	if is_instance_valid(character) and character.has_method(\"bounce\"):
+		swap_color(character)
+		character.bounce()
+
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xtuy7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5adrx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gsix"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
+
+[node name="block" type="Node3D"]
+script = SubResource("GDScript_juk8e")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, -0.550102, 0)
+shape = SubResource("BoxShape3D_xtuy7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_5adrx")
+surface_material_override/0 = SubResource("StandardMaterial3D_2gsix")
+
+[node name="bounce_area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4349, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="bounce_area"]
+transform = Transform3D(0.925634, 0, 0, 0, 0.0823696, 0, 0, 0, 0.918874, 0, -0.469386, 0)
+shape = SubResource("BoxShape3D_ny4om")
+
+[connection signal="body_entered" from="bounce_area" to="." method="_on_bounce_area_body_entered"]

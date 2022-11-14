@@ -3,6 +3,7 @@ extends Node
 class_name PlayableCharacter
 
 enum Types { FOX, SPIRIT }
+enum Actions { JUMP, BREAK }
 
 @export var type:Types = Types.FOX
 @export var is_active:bool = false :

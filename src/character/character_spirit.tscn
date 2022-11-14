@@ -1,12 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://di4c645y63mhg"]
+[gd_scene load_steps=6 format=3 uid="uid://di4c645y63mhg"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_prsvy"]
 
 [sub_resource type="GDScript" id="GDScript_jqooe"]
 script/source = "extends PlayableCharacter
 
+
+class_name CharacterSpirit
+
+
+var color:Color = BlockColors.WHITE:
+	set(value):
+		color = value
+		material.albedo_color = value
+
+
+@onready var bounce_timer:Timer = $bounce_timer
+@onready var material:StandardMaterial3D = $player_body/MeshInstance3D.get_active_material(0)
+
+
+func bounce() -> void:
+	if bounce_timer.is_stopped():
+		bounce_timer.start()
+		player_body.velocity.y = PlayerBody.JUMP_FORCE
 "
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yv83l"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ttimt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7pkv"]
 
 [node name="character_spirit" instance=ExtResource("1_prsvy")]
 script = SubResource("GDScript_jqooe")
 type = 1
+
+[node name="CollisionShape3D" parent="player_body" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.151728, 0)
+shape = SubResource("SphereShape3D_yv83l")
+
+[node name="MeshInstance3D" parent="player_body" index="3"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_ttimt")
+surface_material_override/0 = SubResource("StandardMaterial3D_b7pkv")
+
+[node name="bounce_timer" type="Timer" parent="." index="2"]
+wait_time = 0.3
+one_shot = true

@@ -4,7 +4,7 @@ class_name PlayerBody
 
 
 const MOVE_SPEED:float = 10.0
-const TURN_SPEED:float = 3.0
+const TURN_SPEED:float = 10.0
 const LOOK_SPEED:float = 0.1
 const ACCELERATION:float = 5.0
 const DE_ACCELERATION:float = 8.0
@@ -60,7 +60,7 @@ func process_input():
 	if not self.is_active: return
 	
 	is_right_down = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
-	is_jumping = Input.is_action_just_pressed("jump")
+	is_jumping = character.type == PlayableCharacter.Types.SPIRIT and Input.is_action_just_pressed("action")
 	
 	if Input.is_action_pressed("forward"):
 		direction += facing[2]
