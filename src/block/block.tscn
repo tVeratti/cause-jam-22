@@ -1,4 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b26a10wk3k2nc"]
+[gd_scene load_steps=7 format=3 uid="uid://b26a10wk3k2nc"]
+
+[ext_resource type="Shader" path="res://block/block.gdshader" id="1_g1jwf"]
 
 [sub_resource type="GDScript" id="GDScript_juk8e"]
 script/source = "extends Node3D
@@ -11,13 +13,23 @@ var coords:Array = []
 var color:Color = BlockColors.RED:
 	set(value):
 		color = value
-		material.albedo_color = value
+		material.set_shader_parameter(\"color\", value)
 
 
 @onready var mesh:MeshInstance3D = $StaticBody3D/MeshInstance3D
-@onready var material:StandardMaterial3D = mesh.get_active_material(0)
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
+@onready var material:ShaderMaterial = mesh.get_active_material(0)
 
+
+func _process(delta):
+	var character_spirit = get_tree().get_nodes_in_group(\"spirit\")[0]
+	var spirit_origin = character_spirit.global_transform.origin if character_spirit.is_active else Vector3(-999, 0, -999)
+	var spirit_distance = ignore_y(global_transform.origin).distance_to(ignore_y(spirit_origin))
+	material.set_shader_parameter(\"spirit_distance\", spirit_distance)
+
+
+func ignore_y(vector:Vector3) -> Vector3:
+	return Vector3(vector.x, 0, vector.z)
 
 func swap_color(character) -> void:
 	var temp_color:Color = character.color
@@ -46,8 +58,12 @@ func _on_animation_player_animation_finished(anim_name):
 
 [sub_resource type="BoxMesh" id="BoxMesh_5adrx"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gsix"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_llbx6"]
 resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_g1jwf")
+shader_parameter/color = Color(0, 0.156863, 1, 1)
+shader_parameter/spirit_distance = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
 
@@ -101,7 +117,7 @@ shape = SubResource("BoxShape3D_xtuy7")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_5adrx")
-surface_material_override/0 = SubResource("StandardMaterial3D_2gsix")
+surface_material_override/0 = SubResource("ShaderMaterial_llbx6")
 
 [node name="bounce_area" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4349, 0)
