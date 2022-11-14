@@ -76,7 +76,7 @@ func check_break(block) -> Array:
 	
 	for breakable_coord in connected_coords:
 		var breakable_block = maze[breakable_coord.x][breakable_coord.y]
-		breakable_block.queue_free()
+		breakable_block.break_self()
 	
 	return connected_coords
 
@@ -86,11 +86,15 @@ func get_connections(x, y, current_connections, color) -> Array:
 	checked_coords.append(Vector2(x, y))
 	
 	var adjacent_coords = get_adjacent_coords(x, y, color)
-	current_connections.append_array(adjacent_coords)
+	for connection in adjacent_coords:
+			if not current_connections.has(connection):
+				current_connections.append(connection)
 	
 	for coords in adjacent_coords:
 		var connections = get_connections(coords.x, coords.y, current_connections, color)
-		current_connections.append_array(connections)
+		for connection in connections:
+			if not current_connections.has(connection):
+				current_connections.append(connection)
 	
 	return current_connections
 

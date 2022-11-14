@@ -13,7 +13,7 @@
 script = ExtResource("1_tgy31")
 
 [node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(12.821, 0, 0, 0, 0.423, 0, 0, 0, 10, 0, 0, 0)
+transform = Transform3D(200, 0, 0, 0, 0.1, 0, 0, 0, 200, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_ov06v")
@@ -25,9 +25,9 @@ mesh = SubResource("BoxMesh_rlf1s")
 transform = Transform3D(1, 0, 0, 0, 0.868311, 0.49602, 0, -0.49602, 0.868311, 0, 6.80872, 6.88285)
 
 [node name="character_spirit" parent="." instance=ExtResource("2_hfbas")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29919, 1.40776, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29919, 1.40776, -8.41231)
 
 [node name="character_fox" parent="." instance=ExtResource("3_6ngcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09219, 1.36178, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09219, 1.36178, -8.05387)
 
 [node name="block_maze" parent="." instance=ExtResource("4_4xt58")]

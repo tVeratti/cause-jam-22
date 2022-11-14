@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b26a10wk3k2nc"]
+[gd_scene load_steps=9 format=3 uid="uid://b26a10wk3k2nc"]
 
 [sub_resource type="GDScript" id="GDScript_juk8e"]
 script/source = "extends Node3D
@@ -16,6 +16,7 @@ var color:Color = BlockColors.RED:
 
 @onready var mesh:MeshInstance3D = $StaticBody3D/MeshInstance3D
 @onready var material:StandardMaterial3D = mesh.get_active_material(0)
+@onready var animation_player:AnimationPlayer = $AnimationPlayer
 
 
 func swap_color(character) -> void:
@@ -25,7 +26,7 @@ func swap_color(character) -> void:
 
 
 func break_self() -> void:
-	queue_free()
+	animation_player.play(\"break\")
 
 
 func _on_bounce_area_body_entered(body):
@@ -34,6 +35,11 @@ func _on_bounce_area_body_entered(body):
 		swap_color(character)
 		character.bounce()
 
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == \"break\":
+		queue_free()
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtuy7"]
@@ -44,6 +50,43 @@ func _on_bounce_area_body_entered(body):
 resource_local_to_scene = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
+
+[sub_resource type="Animation" id="Animation_qpld8"]
+resource_name = "break"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StaticBody3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(0.287175, 1.86607, 0.392292),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(0.01, 0.01, 0.01)]
+}
+
+[sub_resource type="Animation" id="Animation_pntl4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StaticBody3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcdm2"]
+_data = {
+"RESET": SubResource("Animation_pntl4"),
+"break": SubResource("Animation_qpld8")
+}
 
 [node name="block" type="Node3D"]
 script = SubResource("GDScript_juk8e")
@@ -67,4 +110,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4349, 0)
 transform = Transform3D(0.925634, 0, 0, 0, 0.0823696, 0, 0, 0, 0.918874, 0, -0.469386, 0)
 shape = SubResource("BoxShape3D_ny4om")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dcdm2")
+}
+
 [connection signal="body_entered" from="bounce_area" to="." method="_on_bounce_area_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
