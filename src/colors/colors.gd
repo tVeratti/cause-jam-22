@@ -4,7 +4,9 @@ extends Node
 class_name BlockColors
 
 
-const RED = Color("#DC267F")
-const BLUE = Color("#648FFF")
-const YELLOW = Color("#FFB000")
-const WHITE = Color.WHITE
+const RED = Color("#DB2434")
+const BLUE = Color("#6FA5FA")
+const YELLOW = Color("#FAED5C")
+const ORANGE = Color("#FA723A")
+const PURPLE = Color("#FA66EA")
+const GREEN = Color("#5CFA89")

@@ -1,0 +1,17 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://bnaqnmcamnm6a"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ulmst"]
+sky_top_color = Color(0.717647, 0.54902, 0.898039, 1)
+sky_horizon_color = Color(0.854902, 0.462745, 0.792157, 1)
+
+[sub_resource type="Sky" id="Sky_ny30r"]
+sky_material = SubResource("ProceduralSkyMaterial_ulmst")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_ny30r")
+tonemap_mode = 3
+fog_light_color = Color(0.494118, 0.52549, 0.796078, 1)
+fog_height = 18.56
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(1, 0.686275, 1, 1)

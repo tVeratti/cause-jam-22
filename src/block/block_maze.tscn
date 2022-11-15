@@ -7,6 +7,7 @@ script/source = "extends Node3D
 const BlockScene = preload(\"res://block/block.tscn\")
 
 const MAP_SIZE:int = 30
+const MARGIN:float = 0.1
 
 var maze:Array = []
 var checked_coords:Array = []
@@ -28,7 +29,7 @@ func generate_maze() -> void:
 			add_child(block)
 			block.coords = [x, y]
 			block.color = get_random_color(x, y)
-			block.global_transform.origin = Vector3(x, 0, y)
+			block.global_transform.origin = Vector3(x * (Block.SIZE + MARGIN), 0, y * (Block.SIZE + MARGIN))
 			maze[x].append(block)
 
 
@@ -38,20 +39,24 @@ func get_random_color(x:int, y:int) -> Color:
 		var random_index = randi_range(0, adjacent_colors.size() - 1)
 		return adjacent_colors[random_index]
 	else:
-		var value = randi_range(0, 3)
+		var value = randi_range(0, 5)
 		match(value):
 			0: return BlockColors.RED
 			1: return BlockColors.BLUE
 			2: return BlockColors.YELLOW
-			_: return BlockColors.WHITE
+			3: return BlockColors.ORANGE
+			4: return BlockColors.GREEN
+			_: return BlockColors.PURPLE
 
 
 func get_adjacent_colors(x:int, y:int) -> Array:
 	var adjacent_colors = [
-		BlockColors.BLUE,
 		BlockColors.RED,
+		BlockColors.BLUE,
 		BlockColors.YELLOW,
-		BlockColors.WHITE]
+		BlockColors.ORANGE,
+		BlockColors.GREEN,
+		BlockColors.PURPLE]
 	
 	for offset_x in range(2):
 		for offset_y in range(2):

@@ -33,3 +33,14 @@ func _process(delta):
 func swap(from_type:Types):
 	self.is_active = from_type != type
 	swap_timer.start()
+	
+	if is_active: on_swap_on()
+	else: on_swap_off()
+
+
+func on_swap_off():
+	pass
+
+
+func on_swap_on():
+	pass

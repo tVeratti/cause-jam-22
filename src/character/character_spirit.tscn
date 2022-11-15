@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://di4c645y63mhg"]
+[gd_scene load_steps=10 format=3 uid="uid://di4c645y63mhg"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_prsvy"]
 
@@ -9,7 +9,7 @@ script/source = "extends PlayableCharacter
 class_name CharacterSpirit
 
 
-var color:Color = BlockColors.WHITE:
+var color:Color = BlockColors.BLUE:
 	set(value):
 		color = value
 		material.albedo_color = value
@@ -17,33 +17,51 @@ var color:Color = BlockColors.WHITE:
 
 @onready var bounce_timer:Timer = $bounce_timer
 @onready var material:StandardMaterial3D = $player_body/MeshInstance3D.get_active_material(0)
+@onready var particles:CPUParticles3D = $player_body/CPUParticles3D
 
 
 func bounce() -> void:
 	if bounce_timer.is_stopped():
 		bounce_timer.start()
 		player_body.velocity.y = PlayerBody.JUMP_FORCE
+
+
+func on_swap_on():
+	var fox_body = get_tree().get_nodes_in_group(\"fox_body\")[0]
+	var facing = fox_body.anchor.basis.z.normalized()
+	player_body.global_transform.origin = fox_body.global_transform.origin + Vector3(0, 1, 0)
+	player_body.velocity = (facing * 20) + Vector3(0, 10, 0)
+	player_body.anchor.rotation = fox_body.anchor.rotation
+	player_body.gizmo.rotation = fox_body.gizmo.rotation
+	particles.emitting = true
+
+
+func on_swap_off():
+	player_body.global_transform.origin = Vector3.ZERO
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yv83l"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ulmst"]
-sky_top_color = Color(0.717647, 0.54902, 0.898039, 1)
-sky_horizon_color = Color(0.854902, 0.462745, 0.792157, 1)
-
-[sub_resource type="Sky" id="Sky_ny30r"]
-sky_material = SubResource("ProceduralSkyMaterial_ulmst")
-
-[sub_resource type="Environment" id="Environment_wn6w6"]
-background_mode = 2
-sky = SubResource("Sky_ny30r")
-fog_enabled = true
-fog_light_color = Color(0.494118, 0.52549, 0.796078, 1)
-fog_height = 18.56
-
 [sub_resource type="SphereMesh" id="SphereMesh_ttimt"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7pkv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tsb20"]
+emission_enabled = true
+emission_energy_multiplier = 1.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yfo30"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_vy56v"]
+material = SubResource("StandardMaterial3D_yfo30")
+
+[sub_resource type="Curve" id="Curve_tyneq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_65em5"]
+offsets = PackedFloat32Array(0.00510204, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="character_spirit" groups=["spirit"] instance=ExtResource("1_prsvy")]
 script = SubResource("GDScript_jqooe")
@@ -53,13 +71,29 @@ type = 1
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.151728, 0)
 shape = SubResource("SphereShape3D_yv83l")
 
-[node name="Camera3D" parent="player_body/anchor/gizmo" index="0"]
-environment = SubResource("Environment_wn6w6")
-
 [node name="MeshInstance3D" parent="player_body" index="3"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 mesh = SubResource("SphereMesh_ttimt")
-surface_material_override/0 = SubResource("StandardMaterial3D_b7pkv")
+surface_material_override/0 = SubResource("StandardMaterial3D_tsb20")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="player_body" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0335644, 0)
+emitting = false
+amount = 12
+lifetime = 0.3
+one_shot = true
+mesh = SubResource("SphereMesh_vy56v")
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_tyneq")
+color_ramp = SubResource("Gradient_65em5")
 
 [node name="bounce_timer" type="Timer" parent="." index="2"]
 wait_time = 0.3

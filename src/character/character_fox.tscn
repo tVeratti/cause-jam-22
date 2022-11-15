@@ -20,9 +20,11 @@ func _process(delta):
 				Signals.try_break.emit(block)
 "
 
-[node name="character_fox" instance=ExtResource("1_kt82o")]
+[node name="character_fox" groups=["fox"] instance=ExtResource("1_kt82o")]
 script = SubResource("GDScript_nag2s")
 is_active = true
+
+[node name="player_body" parent="." index="0" groups=["fox_body"]]
 
 [node name="break_ray" type="RayCast3D" parent="player_body/MeshInstance3D" index="0"]
 transform = Transform3D(6.66667, 0, 0, 0, 6.66667, 0, 0, 0, 6.66667, 0, -0.464447, 0)

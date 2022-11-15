@@ -1,58 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b26a10wk3k2nc"]
+[gd_scene load_steps=11 format=3 uid="uid://b26a10wk3k2nc"]
 
 [ext_resource type="Shader" path="res://block/block.gdshader" id="1_g1jwf"]
-
-[sub_resource type="GDScript" id="GDScript_juk8e"]
-script/source = "extends Node3D
-
-
-class_name Block
-
-
-var coords:Array = []
-var color:Color = BlockColors.RED:
-	set(value):
-		color = value
-		material.set_shader_parameter(\"color\", value)
-
-
-@onready var mesh:MeshInstance3D = $StaticBody3D/MeshInstance3D
-@onready var animation_player:AnimationPlayer = $AnimationPlayer
-@onready var material:ShaderMaterial = mesh.get_active_material(0)
-
-
-func _process(delta):
-	var character_spirit = get_tree().get_nodes_in_group(\"spirit\")[0]
-	var spirit_origin = character_spirit.global_transform.origin if character_spirit.is_active else Vector3(-999, 0, -999)
-	var spirit_distance = ignore_y(global_transform.origin).distance_to(ignore_y(spirit_origin))
-	material.set_shader_parameter(\"spirit_distance\", spirit_distance)
-
-
-func ignore_y(vector:Vector3) -> Vector3:
-	return Vector3(vector.x, 0, vector.z)
-
-func swap_color(character) -> void:
-	var temp_color:Color = character.color
-	character.color = color
-	self.color = temp_color
-
-
-func break_self() -> void:
-	animation_player.play(\"break\")
-
-
-func _on_bounce_area_body_entered(body):
-	var character = body.get_parent()
-	if is_instance_valid(character) and character.has_method(\"bounce\"):
-		swap_color(character)
-		character.bounce()
-
-
-
-func _on_animation_player_animation_finished(anim_name):
-	if anim_name == \"break\":
-		queue_free()
-"
+[ext_resource type="Script" path="res://block/block.gd" id="1_lwoih"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtuy7"]
 
@@ -63,9 +12,36 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_g1jwf")
 shader_parameter/color = Color(0, 0.156863, 1, 1)
-shader_parameter/spirit_distance = 0.0
+shader_parameter/fox_distance = null
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
+
+[sub_resource type="Animation" id="Animation_pntl4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StaticBody3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StaticBody3D/MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_qpld8"]
 resource_name = "break"
@@ -83,29 +59,43 @@ tracks/0/keys = {
 "values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(0.01, 0.01, 0.01)]
 }
 
-[sub_resource type="Animation" id="Animation_pntl4"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_6jqf4"]
+resource_name = "bounce"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("StaticBody3D:scale")
+tracks/0/path = NodePath("StaticBody3D/MeshInstance3D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.203063, 0.366021, 1),
 "update": 0,
-"values": [Vector3(1, 1, 1)]
+"values": [Vector3(1, 1, 1), Vector3(1.1, 0.2, 1.1), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StaticBody3D/MeshInstance3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.241484, 2.46229, 1),
+"update": 0,
+"values": [Vector3(0, -0.5, 0), Vector3(0, -0.7, 0), Vector3(0, -0.5, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dcdm2"]
 _data = {
 "RESET": SubResource("Animation_pntl4"),
+"bounce": SubResource("Animation_6jqf4"),
 "break": SubResource("Animation_qpld8")
 }
 
 [node name="block" type="Node3D"]
-script = SubResource("GDScript_juk8e")
+script = ExtResource("1_lwoih")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

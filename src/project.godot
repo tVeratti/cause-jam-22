@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Node3D",
+"class": &"Block",
+"language": &"GDScript",
+"path": "res://block/block.gd"
+}, {
 "base": "Node",
 "class": &"BlockColors",
 "language": &"GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[{
 "path": "res://character/player_body.gd"
 }]
 _global_script_class_icons={
+"Block": "",
 "BlockColors": "",
 "PlayableCharacter": "",
 "PlayerBody": ""
@@ -73,3 +79,7 @@ swap={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"unicode":0,"echo":false,"script":null)
 ]
 }
+
+[rendering]
+
+anti_aliasing/quality/msaa_2d=2
