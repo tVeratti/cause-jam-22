@@ -43,22 +43,6 @@ tracks/1/keys = {
 "values": [Vector3(1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_qpld8"]
-resource_name = "break"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("StaticBody3D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(0.287175, 1.86607, 0.392292),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(0.01, 0.01, 0.01)]
-}
-
 [sub_resource type="Animation" id="Animation_6jqf4"]
 resource_name = "bounce"
 length = 0.3
@@ -85,6 +69,22 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(0.241484, 2.46229, 1),
 "update": 0,
 "values": [Vector3(0, -0.5, 0), Vector3(0, -0.7, 0), Vector3(0, -0.5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qpld8"]
+resource_name = "break"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StaticBody3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(0.287175, 1.86607, 0.392292),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(0.01, 0.01, 0.01)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dcdm2"]

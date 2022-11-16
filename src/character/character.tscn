@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://character/character.gd" id="1_ybldr"]
 [ext_resource type="Script" path="res://character/player_body.gd" id="2_1xtnh"]
-[ext_resource type="ArrayMesh" uid="uid://kcsxyl3evmcs" path="res://character/assets/fox_mesh.obj" id="3_3r4km"]
+[ext_resource type="ArrayMesh" uid="uid://bek2me0ejvvyr" path="res://character/assets/55767_22_11_16_20_50_08.obj" id="3_610el"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ints5"]
 
@@ -28,7 +28,7 @@ current = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="player_body"]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.069667, 0)
-mesh = ExtResource("3_3r4km")
+mesh = ExtResource("3_610el")
 
 [node name="swap_timer" type="Timer" parent="."]
 wait_time = 0.3
