@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://di4c645y63mhg"]
+[gd_scene load_steps=11 format=3 uid="uid://di4c645y63mhg"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_prsvy"]
+[ext_resource type="AudioStream" uid="uid://du6h2yfs3dtw6" path="res://character/assets/sounds/Whoosh.wav" id="2_ip0he"]
 
 [sub_resource type="GDScript" id="GDScript_jqooe"]
 script/source = "extends PlayableCharacter
@@ -18,6 +19,7 @@ var color:Color = BlockColors.BLUE:
 @onready var bounce_timer:Timer = $bounce_timer
 @onready var material:StandardMaterial3D = $player_body/MeshInstance3D.get_active_material(0)
 @onready var particles:CPUParticles3D = $player_body/CPUParticles3D
+@onready var audio:AudioStreamPlayer3D = $player_body/AudioStreamPlayer3D
 
 
 func bounce() -> void:
@@ -34,6 +36,7 @@ func on_swap_on():
 	player_body.anchor.rotation = fox_body.anchor.rotation
 	player_body.gizmo.rotation = fox_body.gizmo.rotation
 	particles.emitting = true
+	audio.play()
 
 
 func on_swap_off():
@@ -94,6 +97,10 @@ scale_amount_min = 0.1
 scale_amount_max = 0.5
 scale_amount_curve = SubResource("Curve_tyneq")
 color_ramp = SubResource("Gradient_65em5")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="player_body" index="5"]
+stream = ExtResource("2_ip0he")
+volume_db = -6.0
 
 [node name="bounce_timer" type="Timer" parent="." index="2"]
 wait_time = 0.3

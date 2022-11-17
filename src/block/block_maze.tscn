@@ -10,6 +10,7 @@ const MAP_SIZE:int = 30
 const MARGIN:float = 0.1
 
 var maze:Array = []
+var blocks_broken:int = 0
 var checked_coords:Array = []
 
 
@@ -79,9 +80,12 @@ func check_break(block) -> Array:
 	checked_coords = []
 	var connected_coords:Array = get_connections(x, y, [], block.color)
 	
+	
 	for breakable_coord in connected_coords:
 		var breakable_block = maze[breakable_coord.x][breakable_coord.y]
-		breakable_block.break_self()
+		await get_tree().create_timer(0.1).timeout
+		breakable_block.break_self(blocks_broken)
+		blocks_broken += 1
 	
 	return connected_coords
 

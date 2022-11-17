@@ -7,6 +7,26 @@ class_name Block
 const SIZE:float = 2.0
 
 
+# Break Notes
+const NOTE_1 = preload("res://block/assets/sounds/Note1.wav")
+const NOTE_2 = preload("res://block/assets/sounds/Note2.wav")
+const NOTE_3 = preload("res://block/assets/sounds/Note3.wav")
+const NOTE_4 = preload("res://block/assets/sounds/Note4.wav")
+const NOTE_5 = preload("res://block/assets/sounds/Note5.wav")
+const NOTE_6 = preload("res://block/assets/sounds/Note6.wav")
+const BREAK_NOTES = [
+	NOTE_1,
+	NOTE_2,
+	NOTE_3,
+	NOTE_4,
+	NOTE_5,
+	NOTE_6,
+	NOTE_5,
+	NOTE_4,
+	NOTE_3,
+	NOTE_2]
+
+
 var coords:Array = []
 var is_breaking:bool = false
 var color:Color = BlockColors.RED:
@@ -18,6 +38,7 @@ var color:Color = BlockColors.RED:
 @onready var mesh:MeshInstance3D = $StaticBody3D/MeshInstance3D
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
 @onready var material:ShaderMaterial = mesh.get_active_material(0)
+@onready var audio_player:AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 
 func _ready():
@@ -47,18 +68,21 @@ func swap_color(character) -> void:
 	self.color = temp_color
 
 
-func break_self() -> void:
+func break_self(index:int = 0) -> void:
 	is_breaking = true
 	animation_player.play("break")
+	audio_player.stream = BREAK_NOTES[index % BREAK_NOTES.size() - 1]
+	audio_player.bus = "Break"
+	audio_player.play()
 
 
 func _on_bounce_area_body_entered(body):
 	var character = body.get_parent()
 	if is_instance_valid(character) and character.has_method("bounce"):
 		animation_player.play("bounce")
+		audio_player.play()
 		swap_color(character)
 		character.bounce()
-
 
 
 func _on_animation_player_animation_finished(anim_name):
