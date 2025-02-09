@@ -42,11 +42,11 @@ var color:Color = BlockColors.RED:
 
 
 func _ready():
-	scale = Vector3(SIZE, 1.0, SIZE)
+	scale = Vector3(SIZE - 0.1, 1.0, SIZE - 0.1)
 
 
-func _process(delta):
-	var character_fox = get_tree().get_nodes_in_group("fox_body")[0]
+func _process(_delta):
+	var character_fox = get_tree().get_nodes_in_group("fox")[0]
 	var spirit_active = not character_fox.is_active
 	
 	var fox_distance = 999

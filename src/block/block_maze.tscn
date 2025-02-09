@@ -7,7 +7,6 @@ script/source = "extends Node3D
 const BlockScene = preload(\"res://block/block.tscn\")
 
 const MAP_SIZE:int = 30
-const MARGIN:float = 0.1
 
 var maze:Array = []
 var blocks_broken:int = 0
@@ -22,6 +21,7 @@ func _ready():
 
 func generate_maze() -> void:
 	randomize()
+	var offset = global_transform.origin
 	
 	for x in range(MAP_SIZE):
 		maze.append([])
@@ -30,7 +30,7 @@ func generate_maze() -> void:
 			add_child(block)
 			block.coords = [x, y]
 			block.color = get_random_color(x, y)
-			block.global_transform.origin = Vector3(x * (Block.SIZE + MARGIN), 0, y * (Block.SIZE + MARGIN))
+			block.global_transform.origin = offset + Vector3(x * Block.SIZE, 0, y * Block.SIZE)
 			maze[x].append(block)
 
 
@@ -80,6 +80,7 @@ func check_break(block) -> Array:
 	checked_coords = []
 	var connected_coords:Array = get_connections(x, y, [], block.color)
 	
+	Signals.add_points.emit(connected_coords.size())
 	
 	for breakable_coord in connected_coords:
 		var breakable_block = maze[breakable_coord.x][breakable_coord.y]
@@ -136,7 +137,7 @@ frequency = 0.1
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ng5fd"]
 noise = SubResource("FastNoiseLite_00pjg")
 
-[node name="block_maze" type="Node3D"]
+[node name="BlockMaze" type="Node3D"]
 script = SubResource("GDScript_ouu71")
 
 [node name="TextureRect" type="TextureRect" parent="."]

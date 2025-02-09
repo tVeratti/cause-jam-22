@@ -4,23 +4,22 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dgfj2bk5tj5jm"
 path.s3tc="res://.godot/imported/55767_22_11_16_20_50_08_3_color.png-8605f416e9edf5787c29871e622b400e.s3tc.ctex"
-path.etc2="res://.godot/imported/55767_22_11_16_20_50_08_3_color.png-8605f416e9edf5787c29871e622b400e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc", "etc2"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://character/assets/55767_22_11_16_20_50_08_3_color.png"
-dest_files=["res://.godot/imported/55767_22_11_16_20_50_08_3_color.png-8605f416e9edf5787c29871e622b400e.s3tc.ctex", "res://.godot/imported/55767_22_11_16_20_50_08_3_color.png-8605f416e9edf5787c29871e622b400e.etc2.ctex"]
+dest_files=["res://.godot/imported/55767_22_11_16_20_50_08_3_color.png-8605f416e9edf5787c29871e622b400e.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true

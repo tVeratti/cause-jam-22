@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3 uid="uid://dnbwjjg2ju7tn"]
+
+[ext_resource type="Script" path="res://main/main.gd" id="1_2i646"]
+[ext_resource type="PackedScene" uid="uid://di4c645y63mhg" path="res://character/character_spirit.tscn" id="2_hfbas"]
+[ext_resource type="Texture2D" uid="uid://by7ws38ptu8o" path="res://main/tile.png" id="2_t8nq1"]
+[ext_resource type="PackedScene" uid="uid://clwrivli50oc5" path="res://character/character_fox.tscn" id="3_6ngcu"]
+[ext_resource type="PackedScene" uid="uid://oamgqw7swpki" path="res://block/block_maze.tscn" id="4_4xt58"]
+[ext_resource type="PackedScene" uid="uid://b5u85u0x08vtd" path="res://main/wall/wall.tscn" id="6_6bxyv"]
+[ext_resource type="AudioStream" uid="uid://b8gs18yv7s311" path="res://main/CauseMusicLoop2.ogg" id="7_qkkbr"]
+[ext_resource type="Script" path="res://common/camera/main_camera.gd" id="9_2xs7q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ov06v"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rlf1s"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atymy"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 1, 1, 0.101961)
+albedo_texture = ExtResource("2_t8nq1")
+uv1_scale = Vector3(100, 1, 100)
+uv1_triplanar = true
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_2i646")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ov06v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_rlf1s")
+surface_material_override/0 = SubResource("StandardMaterial3D_atymy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.868311, 0.49602, 0, -0.49602, 0.868311, 0, 6.80872, 6.88285)
+
+[node name="MainCamera" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+current = true
+script = ExtResource("9_2xs7q")
+target = NodePath("../CharacterFox")
+
+[node name="CharacterSpirit" parent="." instance=ExtResource("2_hfbas")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1.40776, -55)
+
+[node name="CharacterFox" parent="." instance=ExtResource("3_6ngcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1.36178, -55)
+
+[node name="BlockMaze" parent="." instance=ExtResource("4_4xt58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0, -51)
+
+[node name="Walls" type="Node3D" parent="."]
+visible = false
+
+[node name="wall2" parent="Walls" instance=ExtResource("6_6bxyv")]
+transform = Transform3D(-8.74228e-06, 0, 1, 0, 1, 0, -200, 0, -4.37114e-08, 100, 0, 0)
+
+[node name="wall4" parent="Walls" instance=ExtResource("6_6bxyv")]
+transform = Transform3D(-8.74228e-06, 0, 1, 0, 1, 0, -200, 0, -4.37114e-08, -100, 0, 0)
+
+[node name="wall3" parent="Walls" instance=ExtResource("6_6bxyv")]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
+
+[node name="wall5" parent="Walls" instance=ExtResource("6_6bxyv")]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_qkkbr")

@@ -17,4 +17,6 @@ void fragment() {
 	float b_modified = min(color.b + desaturate_diff, 1.0);
 	
 	ALBEDO = vec3(r_modified, g_modified, b_modified);
+	METALLIC = 0.2;
+	ROUGHNESS = 0.2;
 }

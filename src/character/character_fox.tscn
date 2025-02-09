@@ -1,31 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://clwrivli50oc5"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_kt82o"]
+[ext_resource type="Script" path="res://character/character_fox.gd" id="2_igkeo"]
 
-[sub_resource type="GDScript" id="GDScript_nag2s"]
-script/source = "extends PlayableCharacter
+[node name="CharacterFox" groups=["fox"] instance=ExtResource("1_kt82o")]
+script = ExtResource("2_igkeo")
 
-
-@onready var break_ray:RayCast3D = $player_body/MeshInstance3D/break_ray
-
-
-func _process(delta):
-	super._process(delta)
-	
-	if not is_active: return
-	if Input.is_action_just_pressed(\"action\"):
-		if break_ray.is_colliding():
-			var block = break_ray.get_collider().get_parent()
-			if is_instance_valid(block) and block.has_method(\"break_self\"):
-				Signals.try_break.emit(block)
-"
-
-[node name="character_fox" groups=["fox"] instance=ExtResource("1_kt82o")]
-script = SubResource("GDScript_nag2s")
-is_active = true
-
-[node name="player_body" parent="." index="0" groups=["fox_body"]]
-
-[node name="break_ray" type="RayCast3D" parent="player_body/MeshInstance3D" index="0"]
+[node name="BreakRay" type="RayCast3D" parent="." index="0"]
+unique_name_in_owner = true
 transform = Transform3D(6.66667, 0, 0, 0, 6.66667, 0, 0, 0, 6.66667, 0, -0.464447, 0)
 target_position = Vector3(0, 0, 1)

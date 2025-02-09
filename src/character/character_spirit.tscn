@@ -1,107 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://di4c645y63mhg"]
+[gd_scene load_steps=3 format=3 uid="uid://di4c645y63mhg"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_prsvy"]
-[ext_resource type="AudioStream" uid="uid://du6h2yfs3dtw6" path="res://character/assets/sounds/Whoosh.wav" id="2_ip0he"]
 
-[sub_resource type="GDScript" id="GDScript_jqooe"]
-script/source = "extends PlayableCharacter
+[sub_resource type="SphereMesh" id="SphereMesh_r5rr6"]
 
-
-class_name CharacterSpirit
-
-
-var color:Color = BlockColors.BLUE:
-	set(value):
-		color = value
-		material.albedo_color = value
-
-
-@onready var bounce_timer:Timer = $bounce_timer
-@onready var material:StandardMaterial3D = $player_body/MeshInstance3D.get_active_material(0)
-@onready var particles:CPUParticles3D = $player_body/CPUParticles3D
-@onready var audio:AudioStreamPlayer3D = $player_body/AudioStreamPlayer3D
-
-
-func bounce() -> void:
-	if bounce_timer.is_stopped():
-		bounce_timer.start()
-		player_body.velocity.y = PlayerBody.JUMP_FORCE
-
-
-func on_swap_on():
-	var fox_body = get_tree().get_nodes_in_group(\"fox_body\")[0]
-	var facing = fox_body.anchor.basis.z.normalized()
-	player_body.global_transform.origin = fox_body.global_transform.origin + Vector3(0, 1, 0)
-	player_body.velocity = (facing * 20) + Vector3(0, 10, 0)
-	player_body.anchor.rotation = fox_body.anchor.rotation
-	player_body.gizmo.rotation = fox_body.gizmo.rotation
-	particles.emitting = true
-	audio.play()
-
-
-func on_swap_off():
-	player_body.global_transform.origin = Vector3.ZERO
-"
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_yv83l"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_ttimt"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tsb20"]
-emission_enabled = true
-emission_energy_multiplier = 1.6
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yfo30"]
-transparency = 1
-vertex_color_use_as_albedo = true
-
-[sub_resource type="SphereMesh" id="SphereMesh_vy56v"]
-material = SubResource("StandardMaterial3D_yfo30")
-
-[sub_resource type="Curve" id="Curve_tyneq"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_65em5"]
-offsets = PackedFloat32Array(0.00510204, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[node name="character_spirit" groups=["spirit"] instance=ExtResource("1_prsvy")]
-script = SubResource("GDScript_jqooe")
+[node name="CharacterSpirit" groups=["spirit"] instance=ExtResource("1_prsvy")]
 type = 1
 
-[node name="CollisionShape3D" parent="player_body" index="0"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.151728, 0)
-shape = SubResource("SphereShape3D_yv83l")
-
-[node name="MeshInstance3D" parent="player_body" index="3"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("SphereMesh_ttimt")
-surface_material_override/0 = SubResource("StandardMaterial3D_tsb20")
-
-[node name="CPUParticles3D" type="CPUParticles3D" parent="player_body" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0335644, 0)
-emitting = false
-amount = 12
-lifetime = 0.3
-one_shot = true
-mesh = SubResource("SphereMesh_vy56v")
-emission_shape = 1
-emission_sphere_radius = 1.0
-direction = Vector3(0, 0, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 2.0
-initial_velocity_max = 3.0
-scale_amount_min = 0.1
-scale_amount_max = 0.5
-scale_amount_curve = SubResource("Curve_tyneq")
-color_ramp = SubResource("Gradient_65em5")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="player_body" index="5"]
-stream = ExtResource("2_ip0he")
-volume_db = -6.0
-
-[node name="bounce_timer" type="Timer" parent="." index="2"]
+[node name="bounce_timer" type="Timer" parent="." index="0"]
 wait_time = 0.3
 one_shot = true
+
+[node name="MeshInstance3D" parent="." index="6"]
+mesh = SubResource("SphereMesh_r5rr6")

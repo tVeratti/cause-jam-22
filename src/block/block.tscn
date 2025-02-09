@@ -12,8 +12,8 @@
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_g1jwf")
+shader_parameter/fox_distance = 1.0
 shader_parameter/color = Color(0, 0.156863, 1, 1)
-shader_parameter/fox_distance = null
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
 
@@ -95,7 +95,7 @@ _data = {
 "break": SubResource("Animation_qpld8")
 }
 
-[node name="block" type="Node3D"]
+[node name="Block" type="Node3D"]
 script = ExtResource("1_lwoih")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]

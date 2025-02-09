@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxhk1sd2yrpxx"]
+
+[ext_resource type="FontFile" uid="uid://nfohd585l3fq" path="res://interface/assets/BreeSerif-Regular.ttf" id="1_2hvgr"]
+
+[sub_resource type="GDScript" id="GDScript_nis15"]
+script/source = "extends CanvasLayer
+
+
+
+@onready var points_label:Label = get_node(\"%points\")
+@onready var combo_label:Label = get_node(\"%combo\")
+@onready var combo_timer:Timer = get_node(\"%combo_timer\")
+
+
+func _ready():
+	Signals.points_changed.connect(self.update_points)
+	Signals.bonus_earned.connect(self.on_bonus_earned)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+func update_points(points:float):
+	points_label.text = \"Points: %s\" % points
+
+
+func on_bonus_earned(index:int):
+	combo_label.text = \"COMBO %sx\" % index
+	combo_label.show()
+	combo_timer.start()
+
+
+func _on_combo_timer_timeout():
+	combo_label.hide()
+"
+
+[sub_resource type="Theme" id="Theme_lhns0"]
+default_font = ExtResource("1_2hvgr")
+Label/fonts/font = ExtResource("1_2hvgr")
+
+[sub_resource type="LabelSettings" id="LabelSettings_rcx5c"]
+font_size = 24
+
+[sub_resource type="Animation" id="Animation_o1kxu"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_vypgf"]
+resource_name = "bonus"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8xfxt"]
+_data = {
+"RESET": SubResource("Animation_o1kxu"),
+"bonus": SubResource("Animation_vypgf")
+}
+
+[node name="interface" type="CanvasLayer"]
+script = SubResource("GDScript_nis15")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_lhns0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="points" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Points: 0
+"
+
+[node name="combo" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "COMBO 1x"
+label_settings = SubResource("LabelSettings_rcx5c")
+
+[node name="combo_timer" type="Timer" parent="MarginContainer/VBoxContainer/combo"]
+unique_name_in_owner = true
+
+[node name="combo_animation" type="AnimationPlayer" parent="MarginContainer/VBoxContainer/combo"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_8xfxt")
+}
+
+[connection signal="timeout" from="MarginContainer/VBoxContainer/combo/combo_timer" to="." method="_on_combo_timer_timeout"]
