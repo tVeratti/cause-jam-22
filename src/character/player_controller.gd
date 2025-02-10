@@ -3,7 +3,7 @@ extends Node
 class_name PlayerController
 
 
-const MOVE_SPEED:float = 10.0
+const MOVE_SPEED:float = 8.0
 const TURN_SPEED:float = 10.0
 const LOOK_SPEED:float = 0.1
 const ACCELERATION:float = 5.0
@@ -35,7 +35,7 @@ var is_active:bool :
 
 
 func _input(event):
-	if not self.is_active: return
+	#if not self.is_active: return
 	
 	if event is InputEventMouseMotion:
 		mouse_delta = event.relative

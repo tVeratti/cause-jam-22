@@ -41,6 +41,8 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	camera_anchor.look_at(camera_lookat.global_position)
+	
 	if not is_active: return
 	
 	velocity = controller.get_velocity(velocity, delta)
