@@ -77,12 +77,11 @@ func break_self(index:int = 0) -> void:
 
 
 func _on_bounce_area_body_entered(body):
-	var character = body.get_parent()
-	if is_instance_valid(character) and character.has_method("bounce"):
+	if is_instance_valid(body) and body.has_method("bounce"):
 		animation_player.play("bounce")
 		audio_player.play()
-		swap_color(character)
-		character.bounce()
+		body.bounce()
+		swap_color(body)
 
 
 func _on_animation_player_animation_finished(anim_name):

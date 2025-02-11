@@ -4,9 +4,13 @@
 [ext_resource type="Script" path="res://character/character_fox.gd" id="2_igkeo"]
 
 [node name="CharacterFox" groups=["fox"] instance=ExtResource("1_kt82o")]
+collision_mask = 12
 script = ExtResource("2_igkeo")
 
 [node name="BreakRay" type="RayCast3D" parent="." index="0"]
 unique_name_in_owner = true
 transform = Transform3D(6.66667, 0, 0, 0, 6.66667, 0, 0, 0, 6.66667, 0, -0.464447, 0)
 target_position = Vector3(0, 0, 1)
+
+[node name="MeshInstance3D" parent="." index="6"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)

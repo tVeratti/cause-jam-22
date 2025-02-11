@@ -27,6 +27,8 @@ uv1_triplanar = true
 script = ExtResource("1_2i646")
 
 [node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_ov06v")
@@ -43,11 +45,13 @@ current = true
 script = ExtResource("9_2xs7q")
 target = NodePath("../CharacterFox")
 
-[node name="CharacterSpirit" parent="." instance=ExtResource("2_hfbas")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1.40776, -55)
-
 [node name="CharacterFox" parent="." instance=ExtResource("3_6ngcu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1.36178, -55)
+is_active = true
+
+[node name="CharacterSpirit" parent="." instance=ExtResource("2_hfbas")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1.40776, -55)
+type = 1
 
 [node name="BlockMaze" parent="." instance=ExtResource("4_4xt58")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0, -51)

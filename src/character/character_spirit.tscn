@@ -1,15 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://di4c645y63mhg"]
+[gd_scene load_steps=6 format=3 uid="uid://di4c645y63mhg"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_prsvy"]
+[ext_resource type="Script" path="res://character/character_spirit.gd" id="2_fjpk4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vs57x"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_r5rr6"]
 
-[node name="CharacterSpirit" groups=["spirit"] instance=ExtResource("1_prsvy")]
-type = 1
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yd8kf"]
 
-[node name="bounce_timer" type="Timer" parent="." index="0"]
+[node name="CharacterSpirit" groups=["spirit"] instance=ExtResource("1_prsvy")]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("2_fjpk4")
+
+[node name="BounceTimer" type="Timer" parent="." index="0"]
 wait_time = 0.3
 one_shot = true
 
+[node name="CollisionShape3D" parent="." index="3"]
+shape = SubResource("SphereShape3D_vs57x")
+
 [node name="MeshInstance3D" parent="." index="6"]
 mesh = SubResource("SphereMesh_r5rr6")
+surface_material_override/0 = SubResource("StandardMaterial3D_yd8kf")

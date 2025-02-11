@@ -18,7 +18,6 @@ wait_time = 0.3
 one_shot = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.629423, 0, 0, 0, 0.629423, 0, 0, 0, 0.629423, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ints5")
 
 [node name="Anchor" type="Node3D" parent="."]
@@ -36,6 +35,5 @@ unique_name_in_owner = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.069667, 0)
 mesh = ExtResource("3_610el")
 skeleton = NodePath("../PlayerController")

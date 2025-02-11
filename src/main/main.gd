@@ -36,7 +36,5 @@ func add_points(num_blocks:int):
 
 
 func _on_ground_area_body_entered(body):
-	print(body)
 	if body.get_parent() == character_spirit and is_instance_valid(character_spirit):
-		print('swap!')
 		Signals.swap.emit(PlayerCharacter.Types.SPIRIT)
