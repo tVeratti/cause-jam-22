@@ -4,12 +4,14 @@ extends Camera3D
 class_name MainCamera
 
 
+const FOV_DEFAULT:float = 75
 const FOV_MAX:float = 90
 const FOV_MIN:float = 40
 const FOV_SPEED:float = 1.0
-const MOVE_SPEED:float = 10.0
+
+const MOVE_SPEED:float = 20.0
 const MOVE_SPEED_CINEMATIC:float = 2.0
-const LOOK_SPEED:float = 10.0
+const LOOK_SPEED:float = 20.0
 
 const SHAKE_STRENGTH_HARD:float = 30.0
 const SHAKE_STRENGTH_SOFT:float = 10.0
@@ -21,7 +23,7 @@ var target_anchor:Node3D
 var target_lookat:Node3D
 var target_offset:Vector3 = Vector3.ZERO
 
-var target_fov:float = FOV_MAX
+var target_fov:float = FOV_DEFAULT
 var move_speed:float = MOVE_SPEED
 var look_speed:float = LOOK_SPEED
 
