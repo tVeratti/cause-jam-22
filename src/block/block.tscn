@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b26a10wk3k2nc"]
+[gd_scene load_steps=14 format=4 uid="uid://b26a10wk3k2nc"]
 
 [ext_resource type="Shader" path="res://block/block.gdshader" id="1_g1jwf"]
 [ext_resource type="Script" path="res://block/block.gd" id="1_lwoih"]
@@ -14,6 +14,22 @@ render_priority = 0
 shader = ExtResource("1_g1jwf")
 shader_parameter/fox_distance = 1.0
 shader_parameter/color = Color(0, 0.156863, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_de7am"]
+shading_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_wq4ao"]
+_surfaces = [{
+"aabb": AABB(-0.528867, -0.528867, -0.528867, 1.05773, 1.05773, 1.05773),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("3GMHv9xjBz/cYwc/3GMHP9xjBz/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjB7/cYwe/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHP9xjBz/cYwe/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjB7/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjBz/cYwc/3GMHv9xjB7/cYwc/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHP9xjBz/cYwe/3GMHv9xjB7/cYwe/3GMHv9xjBz/cYwe/3GMHP9xjB7/cYwe//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
 
@@ -111,6 +127,11 @@ shape = SubResource("BoxShape3D_xtuy7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_5adrx")
 surface_material_override/0 = SubResource("ShaderMaterial_llbx6")
+
+[node name="Outline" type="MeshInstance3D" parent="StaticBody3D/MeshInstance3D"]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_de7am")
+mesh = SubResource("ArrayMesh_wq4ao")
 
 [node name="bounce_area" type="Area3D" parent="."]
 transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 1.07358, 0)

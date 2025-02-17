@@ -29,7 +29,7 @@ var previous_lookat:Vector3 = Vector3.ZERO
 
 
 func _ready():
-	Signals.swap.connect(self.swap)
+	Signals.swap.connect(_on_swap)
 	self.is_active = is_active
 	
 
@@ -66,17 +66,17 @@ func mesh_look(origin:Vector3, delta:float) -> void:
 	mesh.rotation.x = 0
 
 
-func swap(from_type:Types):
+func _on_swap(from_type:Types):
 	self.is_active = from_type != type
 	swap_timer.start()
 	
-	if is_active: on_swap_on()
-	else: on_swap_off()
+	if is_active: _on_swap_on()
+	else: _on_swap_off()
 
 
-func on_swap_off():
+func _on_swap_off():
 	pass
 
 
-func on_swap_on():
+func _on_swap_on():
 	Signals.character_swapped.emit(self)

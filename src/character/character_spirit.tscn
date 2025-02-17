@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://di4c645y63mhg"]
+[gd_scene load_steps=7 format=3 uid="uid://di4c645y63mhg"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_prsvy"]
 [ext_resource type="Script" path="res://character/character_spirit.gd" id="2_fjpk4"]
@@ -12,10 +12,14 @@ height = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yd8kf"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0jero"]
+height = 1.0
+
 [node name="CharacterSpirit" groups=["spirit"] instance=ExtResource("1_prsvy")]
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("2_fjpk4")
+type = 1
 
 [node name="BounceTimer" type="Timer" parent="." index="0"]
 wait_time = 0.3
@@ -24,6 +28,15 @@ one_shot = true
 [node name="CollisionShape3D" parent="." index="3"]
 shape = SubResource("SphereShape3D_3svx1")
 
-[node name="MeshInstance3D" parent="." index="6"]
+[node name="MeshInstance3D" parent="." index="4"]
 mesh = SubResource("SphereMesh_r5rr6")
 surface_material_override/0 = SubResource("StandardMaterial3D_yd8kf")
+
+[node name="ResetCheck" type="Area3D" parent="." index="7"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ResetCheck" index="0"]
+shape = SubResource("CylinderShape3D_0jero")
+
+[connection signal="body_entered" from="ResetCheck" to="." method="_on_reset_check_body_entered"]

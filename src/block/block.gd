@@ -36,12 +36,15 @@ var color:Color = BlockColors.RED:
 
 
 @onready var mesh:MeshInstance3D = $StaticBody3D/MeshInstance3D
+@onready var outline_mesh:MeshInstance3D = %Outline
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
 @onready var material:ShaderMaterial = mesh.get_active_material(0)
 @onready var audio_player:AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 
 func _ready():
+	outline_mesh.hide()
+	
 	scale = Vector3(SIZE - 0.1, 1.0, SIZE - 0.1)
 
 
@@ -53,12 +56,17 @@ func _process(_delta):
 	if is_breaking: fox_distance = 0.0
 	elif spirit_active:
 		var fox_origin = character_fox.global_transform.origin
-		fox_distance = ignore_y(global_transform.origin).distance_to(ignore_y(fox_origin))
+		fox_distance = _ignore_y(global_transform.origin).distance_to(_ignore_y(fox_origin))
 	
 	material.set_shader_parameter("fox_distance", fox_distance)
 
 
-func ignore_y(vector:Vector3) -> Vector3:
+func show_outline(do_show:bool = true) -> void:
+	if do_show: outline_mesh.show()
+	else: outline_mesh.hide()
+
+
+func _ignore_y(vector:Vector3) -> Vector3:
 	return Vector3(vector.x, 0, vector.z)
 
 
@@ -76,11 +84,11 @@ func break_self(index:int = 0) -> void:
 	audio_player.play()
 
 
-func _on_bounce_area_body_entered(body):
-	if is_instance_valid(body) and body.has_method("bounce"):
+func _on_bounce_area_body_entered(body:CharacterSpirit):
+	if body.can_bounce:
+		body.bounce()
 		animation_player.play("bounce")
 		audio_player.play()
-		body.bounce()
 		swap_color(body)
 
 

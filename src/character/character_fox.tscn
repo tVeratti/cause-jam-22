@@ -6,6 +6,7 @@
 [node name="CharacterFox" groups=["fox"] instance=ExtResource("1_kt82o")]
 collision_mask = 12
 script = ExtResource("2_igkeo")
+is_active = true
 
 [node name="BreakRay" type="RayCast3D" parent="." index="0"]
 unique_name_in_owner = true
