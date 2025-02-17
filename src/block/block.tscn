@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://b26a10wk3k2nc"]
+[gd_scene load_steps=13 format=4 uid="uid://b26a10wk3k2nc"]
 
 [ext_resource type="Shader" path="res://block/block.gdshader" id="1_g1jwf"]
 [ext_resource type="Script" path="res://block/block.gd" id="1_lwoih"]
@@ -33,12 +33,40 @@ _surfaces = [{
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
 
-[sub_resource type="Animation" id="Animation_pntl4"]
+[sub_resource type="Animation" id="Animation_s67d4"]
+resource_name = "bounce"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.466667),
+"transitions": PackedFloat32Array(0.15, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 0.4, 1.1), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.466667),
+"transitions": PackedFloat32Array(0.15, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.6, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_arxke"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("StaticBody3D:scale")
+tracks/0/path = NodePath("MeshInstance3D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,106 +78,55 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StaticBody3D/MeshInstance3D:scale")
+tracks/1/path = NodePath("MeshInstance3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(1, 1, 1)]
+"values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_6jqf4"]
-resource_name = "bounce"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("StaticBody3D/MeshInstance3D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(0.203063, 0.366021, 1),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 0.2, 1.1), Vector3(1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("StaticBody3D/MeshInstance3D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(0.241484, 2.46229, 1),
-"update": 0,
-"values": [Vector3(0, -0.5, 0), Vector3(0, -0.7, 0), Vector3(0, -0.5, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_qpld8"]
-resource_name = "break"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("StaticBody3D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(0.287175, 1.86607, 0.392292),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(0.01, 0.01, 0.01)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcdm2"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6847q"]
 _data = {
-"RESET": SubResource("Animation_pntl4"),
-"bounce": SubResource("Animation_6jqf4"),
-"break": SubResource("Animation_qpld8")
+"RESET": SubResource("Animation_arxke"),
+"bounce": SubResource("Animation_s67d4")
 }
 
-[node name="Block" type="Node3D"]
-script = ExtResource("1_lwoih")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="Block" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 4
 collision_mask = 0
+script = ExtResource("1_lwoih")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, -0.550102, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_xtuy7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_5adrx")
 surface_material_override/0 = SubResource("ShaderMaterial_llbx6")
 
-[node name="Outline" type="MeshInstance3D" parent="StaticBody3D/MeshInstance3D"]
+[node name="Outline" type="MeshInstance3D" parent="MeshInstance3D"]
 unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_de7am")
 mesh = SubResource("ArrayMesh_wq4ao")
 
 [node name="bounce_area" type="Area3D" parent="."]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 1.07358, 0)
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0.176551, 0)
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="bounce_area"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.469386, 0)
 shape = SubResource("BoxShape3D_ny4om")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_dcdm2")
-}
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_bprmg")
 bus = &"Bounce"
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6847q")
+}
+
 [connection signal="body_entered" from="bounce_area" to="." method="_on_bounce_area_body_entered"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

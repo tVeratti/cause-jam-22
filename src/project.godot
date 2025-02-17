@@ -21,6 +21,10 @@ Signals="*res://common/signals.gd"
 CameraManager="*res://common/camera/camera_manager.gd"
 BlockManager="*res://block/block_manager.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/smash_the_mesh/plugin.cfg")
+
 [global_group]
 
 fox_body=""

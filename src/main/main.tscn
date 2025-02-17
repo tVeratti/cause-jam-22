@@ -47,12 +47,9 @@ target = NodePath("../CharacterFox")
 
 [node name="CharacterFox" parent="." instance=ExtResource("3_6ngcu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1.36178, -55)
-type = null
-is_active = true
 
 [node name="CharacterSpirit" parent="." instance=ExtResource("2_hfbas")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 1.40776, -55)
-type = 1
 
 [node name="BlockMaze" parent="." instance=ExtResource("4_4xt58")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0, -51)

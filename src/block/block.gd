@@ -1,4 +1,4 @@
-extends Node3D
+extends StaticBody3D
 
 
 class_name Block
@@ -6,6 +6,7 @@ class_name Block
 
 const SIZE:float = 2.0
 
+const BREAK_ROTATION:float = 45 #degrees
 
 # Break Notes
 const NOTE_1 = preload("res://block/assets/sounds/Note1.wav")
@@ -35,8 +36,10 @@ var color:Color = BlockColors.RED:
 		material.set_shader_parameter("color", value)
 
 
-@onready var mesh:MeshInstance3D = $StaticBody3D/MeshInstance3D
+@onready var mesh:MeshInstance3D = $MeshInstance3D
 @onready var outline_mesh:MeshInstance3D = %Outline
+@onready var collision_shape:CollisionShape3D = $CollisionShape3D
+@onready var bounce_area:Area3D = $bounce_area
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
 @onready var material:ShaderMaterial = mesh.get_active_material(0)
 @onready var audio_player:AudioStreamPlayer3D = $AudioStreamPlayer3D
@@ -78,10 +81,24 @@ func swap_color(character) -> void:
 
 func break_self(index:int = 0) -> void:
 	is_breaking = true
-	animation_player.play("break")
+	call_deferred("_start_break_animation")
+	
 	audio_player.stream = BREAK_NOTES[index % BREAK_NOTES.size() - 1]
 	audio_player.bus = "Break"
 	audio_player.play()
+
+
+func _start_break_animation() -> void:
+	collision_shape.disabled = true
+	bounce_area.monitorable = false
+	bounce_area.monitoring = false
+	
+	var tween: = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.tween_property(mesh, "scale", Vector3.ZERO, 0.2)
+	tween.tween_callback(func():
+		queue_free())
 
 
 func _on_bounce_area_body_entered(body:CharacterSpirit):
@@ -90,8 +107,3 @@ func _on_bounce_area_body_entered(body:CharacterSpirit):
 		animation_player.play("bounce")
 		audio_player.play()
 		swap_color(body)
-
-
-func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "break":
-		queue_free()

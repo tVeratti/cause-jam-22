@@ -27,7 +27,7 @@ func generate_maze() -> void:
 			add_child(block)
 			block.coords = [x, y]
 			block.color = get_random_color(x, y)
-			block.global_transform.origin = offset + Vector3(x * Block.SIZE, Block.SIZE * 0.5, y * Block.SIZE)
+			block.global_transform.origin = offset + Vector3(x * Block.SIZE, Block.SIZE, y * Block.SIZE)
 			maze[x].append(block)
 
 

@@ -18,7 +18,9 @@ var can_bounce:bool :
 		return bounce_timer.is_stopped()
 
 @onready var bounce_timer:Timer = $BounceTimer
-#@onready var material:StandardMaterial3D = $player_body/MeshInstance3D.get_active_material(0)
+@onready var shadow_raycast:RayCast3D = %ShadowRayCast
+@onready var shadow_decal:Decal = %ShadowDecal
+
 #@onready var particles:CPUParticles3D = $player_body/CPUParticles3D
 #@onready var audio:AudioStreamPlayer3D = $player_body/AudioStreamPlayer3D
 
@@ -27,6 +29,14 @@ func bounce() -> void:
 	if bounce_timer.is_stopped():
 		bounce_timer.start()
 		velocity.y = PlayerController.JUMP_FORCE
+
+
+func _process(delta):
+	super._process(delta)
+	
+	if shadow_raycast.is_colliding():
+		var block:Block = shadow_raycast.get_collider()
+		shadow_decal.global_position = shadow_raycast.get_collision_point()
 
 
 func _on_swap_on():
