@@ -9,8 +9,6 @@ script = ExtResource("2_igkeo")
 
 [node name="BreakRay" type="RayCast3D" parent="." index="0"]
 unique_name_in_owner = true
-transform = Transform3D(6.66667, 0, 0, 0, 6.66667, 0, 0, 0, 6.66667, 0, -0.464447, 0)
-target_position = Vector3(0, 0, 1)
-
-[node name="MeshInstance3D" parent="." index="6"]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+transform = Transform3D(1, 0, -6.3573e-08, 0, 1, 0, 6.3573e-08, 0, 1, 0, 0.398116, 0)
+target_position = Vector3(0, 0, -5)
+collision_mask = 4

@@ -3,6 +3,9 @@ extends PlayerCharacter
 
 class_name CharacterSpirit
 
+const LAUNCH_FACING_MULTIPLIER:float = 20.0
+const LAUNCH_VELOCITY:Vector3 = Vector3(0, 10, 0)
+
 
 var color:Color = BlockColors.BLUE:
 	set(value):
@@ -25,10 +28,8 @@ func bounce() -> void:
 func on_swap_on():
 	var fox_body = get_tree().get_first_node_in_group("fox")
 	var facing = fox_body.anchor.basis.z.normalized()
-	global_transform.origin = fox_body.global_transform.origin + Vector3(0, 1, 0)
-	velocity = (facing * 20) + Vector3(0, 10, 0)
-	#anchor.rotation = fox_body.anchor.rotation
-	#gizmo.rotation = fox_body.gizmo.rotation
+	global_transform.origin = fox_body.global_transform.origin + Vector3.UP
+	velocity = (facing * LAUNCH_FACING_MULTIPLIER) + LAUNCH_VELOCITY
 	#particles.emitting = true
 	#audio.play()
 	

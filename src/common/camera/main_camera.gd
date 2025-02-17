@@ -65,7 +65,6 @@ func _generate_shake() -> Vector3:
 		Random.roll_float(shake_current, -shake_current))
 
 
-
 func _on_shake_hard() -> void:
 	shake(SHAKE_STRENGTH_HARD)
 
