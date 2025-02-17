@@ -6,6 +6,7 @@ class_name CharacterSpirit
 
 const LAUNCH_FACING_MULTIPLIER:float = 20.0
 const LAUNCH_VELOCITY:Vector3 = Vector3(0, 10, 0)
+const DECAL_SIZE:Vector3 = Vector3(0.5, 0.5, 0.5)
 
 
 var color:Color = BlockColors.BLUE :
@@ -37,6 +38,9 @@ func _process(delta):
 	if shadow_raycast.is_colliding():
 		var block:Block = shadow_raycast.get_collider()
 		shadow_decal.global_position = shadow_raycast.get_collision_point()
+		var distance: = shadow_decal.global_position.distance_to(global_position)
+		var distance_percentage = max(0.3, 1.0 - (distance / 3.0))
+		shadow_decal.size = DECAL_SIZE * distance_percentage
 
 
 func _on_swap_on():
