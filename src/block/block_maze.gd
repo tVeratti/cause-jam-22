@@ -4,6 +4,7 @@ extends Node3D
 const BlockScene = preload("res://block/block.tscn")
 
 const MAP_SIZE:int = 30
+const BLOCK_MARGIN:float = 0.1
 
 var maze:Array = []
 var blocks_broken:int = 0
@@ -18,7 +19,7 @@ func _ready():
 
 func generate_maze() -> void:
 	randomize()
-	var offset = global_transform.origin
+	var maze_origin: = global_transform.origin
 	
 	for x in range(MAP_SIZE):
 		maze.append([])
@@ -27,7 +28,15 @@ func generate_maze() -> void:
 			add_child(block)
 			block.coords = [x, y]
 			block.color = get_random_color(x, y)
-			block.global_transform.origin = offset + Vector3(x * Block.SIZE, Block.SIZE, y * Block.SIZE)
+			
+			var block_margin: = Vector3(x, 0.0, y) * BLOCK_MARGIN
+			var block_offset: = Vector3(
+				x * Block.SIZE,
+				Block.SIZE * 0.33,
+				y * Block.SIZE)
+			
+			block.global_transform.origin = maze_origin + block_offset + block_margin
+			
 			maze[x].append(block)
 
 

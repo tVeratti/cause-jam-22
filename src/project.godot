@@ -23,7 +23,7 @@ BlockManager="*res://block/block_manager.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/smash_the_mesh/plugin.cfg")
+enabled=PackedStringArray()
 
 [global_group]
 

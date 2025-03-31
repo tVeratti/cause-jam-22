@@ -1,19 +1,23 @@
-[gd_scene load_steps=13 format=4 uid="uid://b26a10wk3k2nc"]
+[gd_scene load_steps=14 format=4 uid="uid://b26a10wk3k2nc"]
 
 [ext_resource type="Shader" uid="uid://uvs7t6icwc3j" path="res://block/block.gdshader" id="1_g1jwf"]
 [ext_resource type="Script" uid="uid://c6lp7uns5426l" path="res://block/block.gd" id="1_lwoih"]
 [ext_resource type="AudioStream" uid="uid://csnxhuk43bdh8" path="res://block/assets/sounds/Bounce.wav" id="3_bprmg"]
+[ext_resource type="Texture2D" uid="uid://bfyfbjdnn52bf" path="res://block/assets/textures/shapes/triangle_normalmap.png" id="3_o2knv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtuy7"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_5adrx"]
+[sub_resource type="QuadMesh" id="QuadMesh_07jjg"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_llbx6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sj7r8"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_g1jwf")
-shader_parameter/fox_distance = 1.0
-shader_parameter/color = Color(0, 0.156863, 1, 1)
+shader_parameter/player_distance = 0.0
+shader_parameter/color = Color(0.745098, 0.568627, 0.560784, 1)
+shader_parameter/shape_texture = ExtResource("3_o2knv")
+shader_parameter/shape_scale = Vector2(2, 2)
+shader_parameter/shape_offset = Vector2(-0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_de7am"]
 shading_mode = 0
@@ -42,46 +46,22 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/path = NodePath("CollisionShape3D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.166667, 0.466667),
 "transitions": PackedFloat32Array(0.15, 1, 1),
 "update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 0.4, 1.1), Vector3(1, 1, 1)]
+"values": [Vector3(0, 0, 0), Vector3(0, -0.6, 0), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:position")
+tracks/1/path = NodePath("CollisionShape3D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.466667),
-"transitions": PackedFloat32Array(0.15, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.6, 0), Vector3(0, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape3D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.466667),
-"transitions": PackedFloat32Array(0.15, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.6, 0), Vector3(0, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape3D:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.166667, 0.466667),
 "transitions": PackedFloat32Array(0.15, 1, 1),
 "update": 0,
@@ -95,22 +75,55 @@ _data = {
 }
 
 [node name="Block" type="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_lwoih")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
 shape = SubResource("BoxShape3D_xtuy7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_5adrx")
-surface_material_override/0 = SubResource("ShaderMaterial_llbx6")
+[node name="MeshRoot" type="Node3D" parent="."]
+unique_name_in_owner = true
 
-[node name="Outline" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="Sides" type="Node3D" parent="MeshRoot"]
+unique_name_in_owner = true
+
+[node name="Side_01" type="MeshInstance3D" parent="MeshRoot/Sides"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.5)
+mesh = SubResource("QuadMesh_07jjg")
+surface_material_override/0 = SubResource("ShaderMaterial_sj7r8")
+
+[node name="Side_02" type="MeshInstance3D" parent="MeshRoot/Sides"]
+transform = Transform3D(-1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, 0, -0.5, 0)
+mesh = SubResource("QuadMesh_07jjg")
+surface_material_override/0 = SubResource("ShaderMaterial_sj7r8")
+
+[node name="Side_03" type="MeshInstance3D" parent="MeshRoot/Sides"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("QuadMesh_07jjg")
+surface_material_override/0 = SubResource("ShaderMaterial_sj7r8")
+
+[node name="Side_04" type="MeshInstance3D" parent="MeshRoot/Sides"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0)
+mesh = SubResource("QuadMesh_07jjg")
+surface_material_override/0 = SubResource("ShaderMaterial_sj7r8")
+
+[node name="Side_05" type="MeshInstance3D" parent="MeshRoot/Sides"]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0.5, 0, 0)
+mesh = SubResource("QuadMesh_07jjg")
+surface_material_override/0 = SubResource("ShaderMaterial_sj7r8")
+
+[node name="Side_06" type="MeshInstance3D" parent="MeshRoot/Sides"]
+transform = Transform3D(1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, -4.37114e-08, -0.5, 0, 0)
+mesh = SubResource("QuadMesh_07jjg")
+surface_material_override/0 = SubResource("ShaderMaterial_sj7r8")
+
+[node name="Outline" type="MeshInstance3D" parent="MeshRoot"]
 unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_de7am")
 mesh = SubResource("ArrayMesh_wq4ao")
+skeleton = NodePath("")
 
 [node name="bounce_area" type="Area3D" parent="."]
 transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0.176551, 0)

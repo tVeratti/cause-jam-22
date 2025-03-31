@@ -9,7 +9,7 @@ const LOOK_SPEED:float = 0.1
 const ACCELERATION:float = 5.0
 const DE_ACCELERATION:float = 8.0
 const TURN_MOVE_MULTIPLIER = 0.5
-const JUMP_FORCE = 11.0
+const JUMP_FORCE = 16.0
 const GRAVITY = 30.0
 
 
