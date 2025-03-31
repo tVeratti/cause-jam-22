@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://clwrivli50oc5"]
 
 [ext_resource type="PackedScene" uid="uid://dy3ahtqwwk6on" path="res://character/character.tscn" id="1_kt82o"]
-[ext_resource type="Script" path="res://character/character_fox.gd" id="2_igkeo"]
+[ext_resource type="Script" uid="uid://b6wxpk31jfauh" path="res://character/character_fox.gd" id="2_igkeo"]
 
 [node name="CharacterFox" groups=["fox"] instance=ExtResource("1_kt82o")]
 collision_mask = 12

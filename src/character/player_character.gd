@@ -50,6 +50,9 @@ func _physics_process(delta):
 	var velocity_flat:Vector3 = Vector3(velocity.x, 0, velocity.z)
 	if not velocity_flat.is_zero_approx():
 		mesh_look(global_transform.origin + velocity_flat, delta)
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
 		
 	move_and_slide()
 

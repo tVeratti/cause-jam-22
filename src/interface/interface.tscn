@@ -51,8 +51,8 @@ resource_name = "bonus"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8xfxt"]
 _data = {
-"RESET": SubResource("Animation_o1kxu"),
-"bonus": SubResource("Animation_vypgf")
+&"RESET": SubResource("Animation_o1kxu"),
+&"bonus": SubResource("Animation_vypgf")
 }
 
 [node name="interface" type="CanvasLayer"]

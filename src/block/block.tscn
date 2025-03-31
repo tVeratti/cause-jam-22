@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=4 uid="uid://b26a10wk3k2nc"]
 
-[ext_resource type="Shader" path="res://block/block.gdshader" id="1_g1jwf"]
-[ext_resource type="Script" path="res://block/block.gd" id="1_lwoih"]
+[ext_resource type="Shader" uid="uid://uvs7t6icwc3j" path="res://block/block.gdshader" id="1_g1jwf"]
+[ext_resource type="Script" uid="uid://c6lp7uns5426l" path="res://block/block.gd" id="1_lwoih"]
 [ext_resource type="AudioStream" uid="uid://csnxhuk43bdh8" path="res://block/assets/sounds/Bounce.wav" id="3_bprmg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtuy7"]
@@ -32,6 +32,9 @@ _surfaces = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ny4om"]
+
+[sub_resource type="Animation" id="Animation_arxke"]
+length = 0.001
 
 [sub_resource type="Animation" id="Animation_s67d4"]
 resource_name = "bounce"
@@ -85,13 +88,10 @@ tracks/3/keys = {
 "values": [Vector3(1, 1, 1), Vector3(1.1, 0.4, 1.1), Vector3(1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_arxke"]
-length = 0.001
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6847q"]
 _data = {
-"RESET": SubResource("Animation_arxke"),
-"bounce": SubResource("Animation_s67d4")
+&"RESET": SubResource("Animation_arxke"),
+&"bounce": SubResource("Animation_s67d4")
 }
 
 [node name="Block" type="StaticBody3D"]
@@ -126,7 +126,7 @@ bus = &"Bounce"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_6847q")
+&"": SubResource("AnimationLibrary_6847q")
 }
 
 [connection signal="body_entered" from="bounce_area" to="." method="_on_bounce_area_body_entered"]

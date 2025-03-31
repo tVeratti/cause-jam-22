@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://dnbwjjg2ju7tn"]
 
-[ext_resource type="Script" path="res://main/main.gd" id="1_2i646"]
+[ext_resource type="Script" uid="uid://ds5vc83fwf5j5" path="res://main/main.gd" id="1_2i646"]
 [ext_resource type="PackedScene" uid="uid://di4c645y63mhg" path="res://character/character_spirit.tscn" id="2_hfbas"]
 [ext_resource type="Texture2D" uid="uid://by7ws38ptu8o" path="res://main/tile.png" id="2_t8nq1"]
 [ext_resource type="PackedScene" uid="uid://clwrivli50oc5" path="res://character/character_fox.tscn" id="3_6ngcu"]
 [ext_resource type="PackedScene" uid="uid://oamgqw7swpki" path="res://block/block_maze.tscn" id="4_4xt58"]
 [ext_resource type="PackedScene" uid="uid://b5u85u0x08vtd" path="res://main/wall/wall.tscn" id="6_6bxyv"]
 [ext_resource type="AudioStream" uid="uid://b8gs18yv7s311" path="res://main/CauseMusicLoop2.ogg" id="7_qkkbr"]
-[ext_resource type="Script" path="res://common/camera/main_camera.gd" id="9_2xs7q"]
+[ext_resource type="Script" uid="uid://dstvfsfqey45w" path="res://common/camera/main_camera.gd" id="9_2xs7q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ov06v"]
 size = Vector3(200, 1, 200)

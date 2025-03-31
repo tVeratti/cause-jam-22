@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://oamgqw7swpki"]
 
-[ext_resource type="Script" path="res://block/block_maze.gd" id="1_4uecu"]
+[ext_resource type="Script" uid="uid://b0tshacacwrjj" path="res://block/block_maze.gd" id="1_4uecu"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_00pjg"]
 noise_type = 0
